@@ -26,3 +26,44 @@ hello() {
     return `I am a filter`;
   }
 ```
+
+### If we have an especific controller for a module we dont need to specified int the root of the route
+
+```javascript
+@Controller('products')
+export class ProductsController {
+  @Get('products')
+  getProducts(
+    @Query('limit') limit = 100,
+    @Query('offset') offset = 0,
+    @Query('brand') brand: string,
+  ) {
+    return `products limit=> ${limit} offset=> ${offset} brand=> ${brand}`;
+  }
+}
+//we dont have to specify products in the route
+
+ @Get()
+  getProducts(
+    @Query('limit') limit = 100,
+    @Query('offset') offset = 0,
+    @Query('brand') brand: string,
+  ) {
+    return `products limit=> ${limit} offset=> ${offset} brand=> ${brand}`;
+  }
+```
+
+> In case on categories we can do something like:
+
+```javascript
+@Controller('categories')
+export class CategoriesController {
+  @Get(':id/products/:productId') //instead of categories/:id/products/:productId
+  getCategories(
+    @Param('productId') productId: string,
+    @Param('id') id: string,
+  ) {
+    return `product ${productId} and ${id}`;
+  }
+}
+```
